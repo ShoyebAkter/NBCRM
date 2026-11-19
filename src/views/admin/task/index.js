@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { DeleteIcon, EditIcon, ViewIcon } from "@chakra-ui/icons";
 import {
   Button,
@@ -184,7 +184,7 @@ const Task = () => {
       : []),
   ];
 
-  const fetchData = async () => {
+  const fetchData = useCallback (async () => {
     setIsLoding(true);
     const result = await dispatch(fetchTaskData());
     if (result?.payload?.status === 200) {
@@ -193,7 +193,7 @@ const Task = () => {
       toast.error("Failed to fetch data", "error");
     }
     setIsLoding(false);
-  };
+  })
   const setStatusData = async (cell, e) => {
     try {
       setIsLoding(true);
@@ -265,7 +265,7 @@ const Task = () => {
   };
   useEffect(() => {
     fetchData();
-  }, [action]);
+  }, [fetchData]);
 
   return (
     <div>
