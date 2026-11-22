@@ -270,7 +270,10 @@ const AddEditUser = (props) => {
                 onBlur={handleBlur}
                 value={values?.username}
                 name="username"
-                disabled={userAction === "edit"}
+                disabled={
+                  userAction === "edit" &&
+                  JSON.parse(localStorage.getItem("user"))?.role !== "superAdmin"
+                }
                 placeholder="Email Address"
                 fontWeight="500"
                 borderColor={

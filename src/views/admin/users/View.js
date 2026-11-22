@@ -34,6 +34,7 @@ import { setUser } from "../../../redux/slices/localSlice";
 import CommonDeleteModel from "components/commonDeleteModel";
 import { deleteApi } from "services/api";
 import AddEditUser from "./AddEditUser";
+import ChangePassword from "./components/ChangePassword";
 
 const View = () => {
   const RoleColumn = [
@@ -245,6 +246,9 @@ const View = () => {
                 <Text>{data?.username ? data?.username : " - "}</Text>
               </GridItem>
             </Grid>
+            <Flex mt={5}>
+              <ChangePassword userId={param?.id} />
+            </Flex>
           </Card>
 
           {data?.role !== "superAdmin" && (
