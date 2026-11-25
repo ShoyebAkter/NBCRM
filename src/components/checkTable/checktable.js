@@ -146,6 +146,7 @@ const CommonCheckTable = (props) => {
     getTableBodyProps,
     headerGroups,
     prepareRow,
+    rows,
     page,
     canPreviousPage,
     canNextPage,
@@ -157,6 +158,22 @@ const CommonCheckTable = (props) => {
     setPageSize,
     state: { pageIndex, pageSize },
   } = tableInstance;
+
+  // ---- Select all: every row that matches the current search, across all pages ----
+  const idAccessor = columnData?.find((c) => c?.Header === "#")?.accessor;
+  const canSelectAll =
+    typeof setSelectedValues === "function" &&
+    selectType !== "single" &&
+    (checkBox || checkBox === undefined) &&
+    !!idAccessor;
+  const allRowIds = canSelectAll
+    ? (rows || [])
+        .map((r) => r?.values?.[idAccessor] ?? r?.original?.[idAccessor])
+        .filter(Boolean)
+    : [];
+  const allSelected =
+    allRowIds.length > 0 &&
+    allRowIds.every((id) => selectedValues?.includes(id));
 
   if (
     pageOptions &&
@@ -528,6 +545,17 @@ const CommonCheckTable = (props) => {
                 </Button>
               ) : (
                 ""
+              )}
+              {canSelectAll && allRowIds.length > 0 && (
+                <Button
+                  variant="outline"
+                  colorScheme="brand"
+                  size="sm"
+                  ms={2}
+                  onClick={() => setSelectedValues(allSelected ? [] : allRowIds)}
+                >
+                  {allSelected ? "Unselect all" : `Select all (${allRowIds.length})`}
+                </Button>
               )}
               {selectedValues?.length > 0 && access?.delete && !deleteMany && (
                 <DeleteIcon

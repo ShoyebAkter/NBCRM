@@ -210,7 +210,7 @@ const InvoiceAdvanceSearch = (props) => {
                   }
                 >
                   <option value="Paid">Paid</option>
-                  <option value="Unpaid">Unpaid</option>
+                  <option value="PartiallyPaid">PartiallyPaid</option>
                   <option value="Cancelled">Cancelled</option>
                 </Select>
                 <Text mb="10px" color={"red"}>
